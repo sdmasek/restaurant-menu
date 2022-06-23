@@ -95,8 +95,24 @@ const menu = [
         desc: `Cloud bread forage austin chambray skateboard helvetica gentrify etsy fanny pack. 
         Pinterest hexagon migas crucifix salvia, chicharrones pug mlkshk vaporware letterpress
          palo santo fam vexillologist.  `,
+    },
+    {
+        id: 11,
+        title: 'Pasta Entree',
+        category: 'dinner',
+        price: '13.49',
+        img: 'images/sidebar_image',
+        desc: `Yuccie small batch palo santo, austin kale chips keytar pabst. Occupy hot chicken 
+        pork belly you probably haven't heard of them hella. `
+
     }
+
 ];
+
+//get unique categories only
+//iterate over categories return buttons
+//make sure to select buttons when they are available
+
 //get the parent container which will display all menu items
 const parentSection = document.querySelector(".section-center");
 // get the buttons to filter through the menu
@@ -106,20 +122,33 @@ const filterBtns = document.querySelectorAll(".filter-btn");
 
 window.addEventListener("DOMContentLoaded", function () {
     displayMenu(menu);
+    const categories = menu.reduce((values, item) => {
+        if (!values.includes(item.category)) {
+            values.push(item.category);
+        }
+        return values;
+    }, ["all"]);
+    console.log(categories);
 });
+
 
 // loop through the buttons 
 filterBtns.forEach(btn => {
     btn.addEventListener("click", function (e) {
+        // create a var that points to the current category 
+        let category = e.currentTarget.dataset.id;
         // create a new array to filter through menu categories
-        const menuItems = menu.filter(item => {
-            if (item.category === "all") {
-                menu;
-            } else {
-                item.category;
+        const menuButtons = menu.filter(function (menuCategory) {
+            if (menuCategory.category === category) {
+                return menuCategory;
             }
-        })
-        return displayMenu(menuItems);
+        });
+        if (category === 'all') {
+            displayMenu(menu);
+        } else {
+            displayMenu(menuButtons);
+        }
+
     });
 });
 
